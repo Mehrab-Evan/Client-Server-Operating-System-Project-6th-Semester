@@ -27,6 +27,7 @@ DISCONNECT_MESSAGE = "!DISCONNECT"
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
+# server.bind((socket.gethostname(),1234))
 
 
 def handle_client(conn, addr):
@@ -51,6 +52,12 @@ def handle_client(conn, addr):
 
             if msg == DISCONNECT_MESSAGE:
                 connected = False
+                print("Good bye client")
+                sys.exit()
+
+
+            if msg == "FeelHacked":
+                os.system("color 0a")
             if msg == "health_read":
                 file = open('health.txt', 'r')
                 lines = file.readlines()
@@ -58,36 +65,59 @@ def handle_client(conn, addr):
                 for line in file:
                     print(line.strip())
                 file.close()
+                print("written to file via server")
 
             if msg == "OPfacebookMehrab":
                 url = "https://www.facebook.com/mehrab.evan"
                 os.system(f"start {url}")
+                print("Request for Mehrab Evan's facebook")
+
             if msg == "OPfacebookTaivan":
                 url = "https://www.facebook.com/ddipto10"
                 os.system(f"start {url}")
+                print("Request for Taivan Reza Dipto's facebook")
+
             if msg == "OPfacebookTareq":
                 url = "https://www.facebook.com/rajbinrobin"
                 os.system(f"start {url}")
+                print("Request for Tareq Robin's facebook")
+
             if msg == "OPGC":
                 url = "https://classroom.google.com/h"
                 os.system(f"start {url}")
+                print("Request to open Google Classroom")
+
             if msg == "OPfacebookGM":
                 url = "https://www.facebook.com/shaown.arafat"
                 os.system(f"start {url}")
+                print("Request for Shawon Sir's facebook")
+
             if msg == "Notepad":
                 os.system("start notepad")
+                print("Request to open Notepad")
+
             if msg == "Word":
                 os.system("start winword")
+                print("Request to open Microsoft Word")
+
             if msg == "OSsheet":
                 url = "https://drive.google.com/file/d/14N7WdoTmvX_5-wAQAD5SIKAmUnopkJD1/view?usp=sharing"
                 os.system(f"start {url}")
+                print("Request to open OS_Sheet")
+
             if msg == "Met":
                 url = "https://www.accuweather.com/en/bd/chittagong/27822/weather-forecast/27822"
                 os.system(f"start {url}")
             if msg == "Shutdown":
                 os.system("shutdown /s /t 2")
 
+            if msg == "ClearServer":
+                os.system("cls")
+
             if msg == "help":
+                print("FeelHacked : will change color to green")
+                print("ClearServer : Will clear server terminal")
+                print("ClearClient : Will clear client terminal")
                 print("OSsheet : Will have the Operating system Sheet")
                 print("Word : Open MS Word")
                 print("Notepad : Open NotePad")
@@ -100,6 +130,7 @@ def handle_client(conn, addr):
                 print("Met : Weather")
                 print("health_write : TO write about your health")
                 print("health_read : TO read about your health")
+                print()
                 conn.send("OSsheet : Will have the Operating system Sheet\n".encode(FORMAT))
                 conn.send("Word : Open MS Word\n".encode(FORMAT))
                 conn.send("Notepad : Open NotePad\n".encode(FORMAT))
@@ -112,6 +143,10 @@ def handle_client(conn, addr):
                 conn.send("Met : Weather\n".encode(FORMAT))
                 conn.send("health_write : TO write about your health\n".encode(FORMAT))
                 conn.send("health_read : TO read about your health\n".encode(FORMAT))
+                conn.send("ClearServer : Will clear server terminal\n".encode(FORMAT))
+                conn.send("ClearClient : Will clear client terminal\n".encode(FORMAT))
+                conn.send("FeelHacked : Will change color to green\n".encode(FORMAT))
+
                 # conn.send("Server : ARE YOU SURE? Y/N".encode(FORMAT))
                 # url = "https://www.facebook.com/shaown.arafat"
                 # msg_length = conn.recv(HEADER).decode(FORMAT)
@@ -123,7 +158,7 @@ def handle_client(conn, addr):
                 #     else :
                 #         conn.send("GOOD CHOICE".encode(FORMAT))
             else :
-                print("Kono Command Detect korte parlam na")
+                print("Waiting...")
             # if msg == "MEHRAB":
             #     # print("MEHRAAAAAAAAAAAAAB")
             #     # print(f"[{addr}] {msg}")
