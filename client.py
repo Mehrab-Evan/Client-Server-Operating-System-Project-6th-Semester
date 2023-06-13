@@ -1,5 +1,5 @@
 import socket
-
+import os
 HEADER = 64
 PORT = 5050
 FORMAT = 'utf-8'
@@ -9,6 +9,7 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
+# client.connect((socket.gethostname(),1234))
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -28,6 +29,12 @@ while True:
     client_message = input()
     if client_message == "Kaaj Shesh":
         break
+
+    if client_message == "ClearClient":
+        os.system("cls")
+    if client_message == "FeelHacked":
+        os.system("Color 0a")
+
     if client_message == "health_write":
         print("Height : ")
         h = input()
