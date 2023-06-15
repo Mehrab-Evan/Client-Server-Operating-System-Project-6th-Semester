@@ -55,6 +55,18 @@ def handle_client(conn, addr):
                 print("Good bye client")
                 sys.exit()
 
+            first_four = msg[0:8]
+
+            if first_four == "OPENFILE":
+                last_chars = msg.replace(first_four, "")
+                file = open(f'{last_chars}.txt', 'r')
+                lines = file.readlines()
+                conn.send(f"{lines}\n".encode(FORMAT))
+                for line in file:
+                    print(line.strip())
+                file.close()
+
+
 
             if msg == "FeelHacked":
                 os.system("color 0a")
@@ -111,6 +123,8 @@ def handle_client(conn, addr):
             if msg == "Shutdown":
                 os.system("shutdown /s /t 2")
 
+
+
             if msg == "ClearServer":
                 os.system("cls")
 
@@ -130,6 +144,8 @@ def handle_client(conn, addr):
                 print("Met : Weather")
                 print("health_write : TO write about your health")
                 print("health_read : TO read about your health")
+                print("WRITFILEFILENAME : type WRITEFILE and then a file name to write a manual named file")
+                print("OPENFILEFILENAME : type OPENFILE and then a file name to read the manual named file")
                 print()
                 conn.send("OSsheet : Will have the Operating system Sheet\n".encode(FORMAT))
                 conn.send("Word : Open MS Word\n".encode(FORMAT))
@@ -146,6 +162,8 @@ def handle_client(conn, addr):
                 conn.send("ClearServer : Will clear server terminal\n".encode(FORMAT))
                 conn.send("ClearClient : Will clear client terminal\n".encode(FORMAT))
                 conn.send("FeelHacked : Will change color to green\n".encode(FORMAT))
+                conn.send("WRITFILEFILENAME : type WRITEFILE and then a file name to write a manual named file\n".encode(FORMAT))
+                conn.send("OPENFILEFILENAME : type OPENFILE and then a file name to read the manual named file\n".encode(FORMAT))
 
                 # conn.send("Server : ARE YOU SURE? Y/N".encode(FORMAT))
                 # url = "https://www.facebook.com/shaown.arafat"
