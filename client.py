@@ -46,6 +46,21 @@ while True:
         file.write(f"Height {h} "f" Weight {w} "f" Speed {s}")
         file.close()
 
+    first_four = client_message[0:8]
+
+    # print(first_four)
+    if first_four == "WRITFILE":
+        # print(first_four)
+        last_chars = client_message.replace(first_four, "")
+        print(f"Opening File named {last_chars}")
+        print()
+        print("ENTER FOR FILE : ")
+        get_in = input()
+        file = open(f'{last_chars}.txt', 'w')
+        file.write(f"{get_in} ")
+        file.close()
+
+
     send(client_message)
 
 # send("Hello from Mehrab Server OS")
